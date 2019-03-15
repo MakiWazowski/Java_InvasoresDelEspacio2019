@@ -33,12 +33,16 @@ public class Nave {
         }
     }
     //para posibilitar que se mueva en el eje x 
+    //limitar la nave con la pantalla
+        //hacia la derecha, la nave llega hasta el final de la pantalla menos 
+        //la nave misma
     public void mueve(){
-        if(pulsadoDerecha){
-           x++;  
+        if(pulsadoDerecha && x < VentanaJuego.ANCHOPANTALLA - imagen.getWidth(null)){
+           x += 3;  
         }
-        if(pulsadoIzquierda){
-           x--;
+        // con x -= 3; va mas rapido que con x--;
+        if(pulsadoIzquierda && x > 0){
+           x -= 3;
         }
         
     }
@@ -64,3 +68,5 @@ public class Nave {
          this.pulsadoIzquierda = false ;
     }
 }
+
+//limitar la nave 

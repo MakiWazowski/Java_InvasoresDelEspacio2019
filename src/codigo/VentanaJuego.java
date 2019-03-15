@@ -61,10 +61,11 @@ public class VentanaJuego extends javax.swing.JFrame {
         
         ///////////////////////////////////////////////////////
         //redibujaremos aquí cada elemento
+        //dibujamos el disparo  
+        g2.drawImage(miDisparo.imagen, miDisparo.x, miDisparo.y, null);
         //dibujamos la nave 
         g2.drawImage(miNave.imagen, miNave.x, miNave.y, null);
-        //dibujamos la imagen 
-        g2.drawImage(miDisparo.imagen, miDisparo.x, miDisparo.y, null);
+        
         //llama al movimiento de la nave 
         miNave.mueve();
         //llama al movimiento del disparo 
@@ -135,8 +136,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             //si le doy al boton flecha derecho, se mueve a la izquierda 
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
-            case KeyEvent.VK_SPACE: miDisparo.x = miNave.x;
-                                    miDisparo.y = miNave.y;
+            case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
                                     break;
         }   
                
