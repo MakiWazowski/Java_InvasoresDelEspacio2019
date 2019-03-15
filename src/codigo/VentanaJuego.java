@@ -24,7 +24,10 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     BufferedImage buffer = null;
     
+    //declaro la ventana nave
     Nave miNave = new Nave();
+    //declaro la ventana disparo 
+    Disparos miDisparo = new Disparos();
     
     Timer temporizador = new Timer(10, new ActionListener() {
         @Override
@@ -58,8 +61,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         
         ///////////////////////////////////////////////////////
         //redibujaremos aquí cada elemento
+        //dibujamos la nave 
         g2.drawImage(miNave.imagen, miNave.x, miNave.y, null);
+        //dibujamos la imagen 
+        g2.drawImage(miDisparo.imagen, miDisparo.x, miDisparo.y, null);
+        //llama al movimiento de la nave 
         miNave.mueve();
+        //llama al movimiento del disparo 
+        miDisparo.mueve();
         
         /////////////////////////////////////////////////////////////
         //*****************   fase final, se dibuja ***************//
@@ -125,7 +134,11 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_LEFT: miNave.setPulsadoIzquierda(true) ; break ;
             //si le doy al boton flecha derecho, se mueve a la izquierda 
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
-        }
+            //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
+            case KeyEvent.VK_SPACE: miDisparo.x = miNave.x;
+                                    miDisparo.y = miNave.y;
+                                    break;
+        }   
                
     }//GEN-LAST:event_formKeyPressed
 
