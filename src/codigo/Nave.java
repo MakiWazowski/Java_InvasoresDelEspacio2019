@@ -37,7 +37,7 @@ public class Nave {
         //hacia la derecha, la nave llega hasta el final de la pantalla menos 
         //la nave misma
     public void mueve(){
-        if(pulsadoDerecha && x < VentanaJuego.ANCHOPANTALLA - imagen.getWidth(null)){
+        if(pulsadoDerecha && x < VentanaJuego.ANCHOPANTALLA - imagen.getWidth(null) - imagen.getWidth(null)/5){
            x += 3;  
         }
         // con x -= 3; va mas rapido que con x--;
@@ -69,4 +69,3 @@ public class Nave {
     }
 }
 
-//limitar la nave 

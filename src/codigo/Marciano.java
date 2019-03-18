@@ -30,8 +30,14 @@ public class Marciano {
         }
         }
         //va sumandole la x a la posicion para su movimiento horizontal 
+        //y bloqueamos su movimiento al final de la pantalla 
         public void mueve(){
-        x += velocidadX;
+            if(x < VentanaJuego.ANCHOPANTALLA - imagen1.getWidth(null)-imagen1.getWidth(null)/3){
+             x += velocidadX;
+            }
+       if(x >= VentanaJuego.ANCHOPANTALLA - imagen1.getWidth(null)-imagen1.getWidth(null)/3){
+             y += velocidadX;
+            }
         }
 }
 
