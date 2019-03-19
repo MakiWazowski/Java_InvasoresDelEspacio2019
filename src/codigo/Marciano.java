@@ -32,12 +32,23 @@ public class Marciano {
         //va sumandole la x a la posicion para su movimiento horizontal 
         //y bloqueamos su movimiento al final de la pantalla 
         public void mueve(){
-            if(x < VentanaJuego.ANCHOPANTALLA - imagen1.getWidth(null)-imagen1.getWidth(null)/3){
+            
              x += velocidadX;
-            }
-       if(x >= VentanaJuego.ANCHOPANTALLA - imagen1.getWidth(null)-imagen1.getWidth(null)/3){
-             y += velocidadX;
-            }
+           
+//       if(x >= VentanaJuego.ANCHOPANTALLA - imagen1.getWidth(null)-imagen1.getWidth(null)/3){
+//             y += velocidadX;
+//            }
         }
+
+        
+        //el set establece un valor , en este caso contrario al que habia 
+        //con este set , lo llamamos a la ventab¡na principal del juego
+    public void setVelocidadX(int velocidadX) {
+        this.velocidadX = velocidadX;
+    }
+//get lee el valor 
+    public int getVelocidadX() {
+        return velocidadX;
+    }
 }
 
