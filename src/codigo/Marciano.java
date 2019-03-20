@@ -42,7 +42,7 @@ public class Marciano {
 
         
         //el set establece un valor , en este caso contrario al que habia 
-        //con este set , lo llamamos a la ventab¡na principal del juego
+        //con este set , lo llamamos a la ventabna principal del juego
     public void setVelocidadX(int velocidadX) {
         this.velocidadX = velocidadX;
     }

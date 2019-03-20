@@ -70,7 +70,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 listaMarcianos[i][j].y = i*(8 + listaMarcianos[i][j].imagen1.getHeight(null));
             }
          }
-         miDisparo.posicionaDisparo(miNave);
+        
     }
     
     private void bucleDelJuego(){
@@ -131,7 +131,8 @@ public class VentanaJuego extends javax.swing.JFrame {
 //para mandar al marciano a una posicion muy alta y que no salga en la pantalla 
                 listaMarcianos[i][j].y = 2000;
                 miDisparo.posicionaDisparo(miNave);
-                
+                miDisparo.y = 1000;
+                miDisparo.disparado = false;
             }
         }
         }
@@ -237,6 +238,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
+                                    miDisparo.disparado = true;
                                     break;
         }   
                
