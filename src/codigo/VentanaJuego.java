@@ -122,7 +122,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         //un for por que son muchos marcianos
         for(int i=0; i<filas; i++){
             for(int j=0; j<columnas; j++){
-                
+                if(listaMarcianos[i][j].vivo){
                 rectanguloMarciano.setFrame(listaMarcianos[i][j].x,
                                             listaMarcianos[i][j].y,
                                             listaMarcianos[i][j].imagen1.getHeight(null),
@@ -130,13 +130,13 @@ public class VentanaJuego extends javax.swing.JFrame {
             //ahora hay que comprobar si interseccionan
             if(rectanguloDisparo.intersects(rectanguloMarciano)){
 //para mandar al marciano a una posicion muy alta y que no salga en la pantalla 
-                listaMarcianos[i][j].y = 2000;
-                listaMarcianos[i][j].x = jPanel1.getWidth()/2;
+                listaMarcianos[i][j].vivo = false;
                 miDisparo.posicionaDisparo(miNave);
                 miDisparo.y = 1000;
                 miDisparo.disparado = false;
             }
         }
+            }
         }
     }
     
@@ -155,9 +155,8 @@ public class VentanaJuego extends javax.swing.JFrame {
         int anchoMarciano = listaMarcianos[0][0].imagen1.getWidth(null);
          for(int i=0; i<filas; i++){
             for(int j=0; j<columnas; j++){
-                
+                if(listaMarcianos[i][j].vivo){
                 listaMarcianos[i][j].mueve(); 
-                
                 //chequeo si el marciano se ha chocado con la pared para cambiar 
                 //la direccion de todos los marcianos 
                 if(listaMarcianos[i][j].x + anchoMarciano == ANCHOPANTALLA || listaMarcianos[i][j].x == 0){
@@ -178,6 +177,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                             null);
                         }
                 else contador = 0 ;
+                }
                 }        
          }
         if (direccionMarcianos){

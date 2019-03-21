@@ -19,6 +19,8 @@ public class Marciano {
     public int y = 0;
     //para que se muevan los marcianos 
     private int velocidadX = 1;
+    //para hacer que desaparezca el marciano
+    public boolean vivo = true;
     
     
         public Marciano(){

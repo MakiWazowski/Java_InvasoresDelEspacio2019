@@ -27,10 +27,10 @@ public class Disparos {
             
         }
     }
-        
+        //para el movimiento y la velocidad del disparo
         public void mueve(){
             if(disparado){
-            y--;
+            y -= 10;
             }
         }
         public void posicionaDisparo(Nave _nave){
