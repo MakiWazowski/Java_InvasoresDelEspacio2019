@@ -22,8 +22,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     static int ALTOPANTALLA = 450;
     
     //numero de marcianos que van a aparecer 
-    int filas =5;
-    int columnas =10;
+    int filas =2;
+    int columnas =4;
     
     BufferedImage buffer = null;
     
@@ -40,6 +40,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     //el contador sit¡rve para cambiar el tipo de marciano 
     int contador = 0;
     
+    //para la velocidad en la que se mueve todo 
     Timer temporizador = new Timer(10, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -130,6 +131,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             if(rectanguloDisparo.intersects(rectanguloMarciano)){
 //para mandar al marciano a una posicion muy alta y que no salga en la pantalla 
                 listaMarcianos[i][j].y = 2000;
+                listaMarcianos[i][j].x = jPanel1.getWidth()/2;
                 miDisparo.posicionaDisparo(miNave);
                 miDisparo.y = 1000;
                 miDisparo.disparado = false;
@@ -159,7 +161,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 //chequeo si el marciano se ha chocado con la pared para cambiar 
                 //la direccion de todos los marcianos 
                 if(listaMarcianos[i][j].x + anchoMarciano == ANCHOPANTALLA || listaMarcianos[i][j].x == 0){
-                    cambiaDireccionMarcianos();
+                    direccionMarcianos = true;
                 }
                 
                 if(contador < 50 ){
@@ -178,6 +180,10 @@ public class VentanaJuego extends javax.swing.JFrame {
                 else contador = 0 ;
                 }        
          }
+        if (direccionMarcianos){
+            cambiaDireccionMarcianos();
+            direccionMarcianos = false;
+        }
     }
     
     
