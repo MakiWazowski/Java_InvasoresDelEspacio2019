@@ -24,12 +24,7 @@ public class Marciano {
     
     
         public Marciano(){
-        try {
-            imagen1 = ImageIO.read(getClass().getResource("/imagenes/marcianito1.png"));
-            imagen2 = ImageIO.read(getClass().getResource("/imagenes/marcianito2.png"));
-        } catch (IOException ex) {
-            
-        }
+       
         }
         //va sumandole la x a la posicion para su movimiento horizontal 
         //y bloqueamos su movimiento al final de la pantalla 
