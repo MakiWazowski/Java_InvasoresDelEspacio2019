@@ -27,7 +27,7 @@ public class Nave {
     
     public Nave(){
         try {
-            imagen = ImageIO.read(getClass().getResource("/imagenes/nave.png"));
+            imagen = ImageIO.read(getClass().getResource("/imagenes/ash.png"));
         } catch (IOException ex) {
             
         }

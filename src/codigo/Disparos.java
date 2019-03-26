@@ -6,12 +6,15 @@ package codigo;
 import java.awt.Image;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
  * @author Irene Benito
  */
 public class Disparos {
+    Clip sonidoDisparo;
     
     //Copiado de la nave :
     public Image imagen = null;
@@ -22,8 +25,11 @@ public class Disparos {
     
         public Disparos(){
         try {
-            imagen = ImageIO.read(getClass().getResource("/imagenes/disparo.png"));
-        } catch (IOException ex) {
+//            sonidoDisparo = AudioSystem.getClip();
+//            sonidoDisparo.open(AudioSystem.getAudioInputStream(
+//                     getClass().getResource("/sonido/missile.wav")));
+            imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball.png"));
+        } catch (Exception ex) {
             
         }
     }

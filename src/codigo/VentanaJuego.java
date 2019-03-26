@@ -20,13 +20,17 @@ import javax.swing.Timer;
  * @author Irene Benito
  */
 public class VentanaJuego extends javax.swing.JFrame {
+    
+    
+    
+    //private boolean gameEnded=false;
 
     static int ANCHOPANTALLA = 600;
     static int ALTOPANTALLA = 450;
     
     //numero de marcianos que van a aparecer 
-    int filas =2;
-    int columnas =4;
+    int filas =5;
+    int columnas =5;
     
     BufferedImage buffer = null;
     
@@ -43,12 +47,12 @@ public class VentanaJuego extends javax.swing.JFrame {
     //boolean para que si uno se mueva , todos se muevan
     boolean direccionMarcianos = false;
     
-    //el contador sit¡rve para cambiar el tipo de marciano 
+    //el contador sirve para cambiar el tipo de marciano 
     int contador = 0;
     
     //imagen para cargar el spritesheet con todos los sprites del juego 
     BufferedImage plantilla = null;
-    Image [] imagenes = new Image[30];
+    Image [][] imagenes;
     
     //para la velocidad en la que se mueve todo 
     Timer temporizador = new Timer(10, new ActionListener() {
@@ -57,24 +61,17 @@ public class VentanaJuego extends javax.swing.JFrame {
             bucleDelJuego();
         }
     });
+//    public void gameOver() {
+//       gameEnded = true;
+//      }
     /**
      * Creates new form VentanaJuego
      */
     public VentanaJuego() {
         initComponents();
-        //alt enter para el error ,y le damos al segundo 
-        try {
-            plantilla = ImageIO.read(getClass().getResource("/imagenes/invaders2.png"));
-        } catch (IOException ex) {
-        }
-        //cargo las imagenes de forma individual en cada imagen del array de las imagenes 
-        for(int i=0; i<5; i++){
-            for(int j=0; j<4; j++){
-            imagenes[i*4 + j] = plantilla.getSubimage(j*64, i*64, 64, 64);
-            imagenes[i*4 + j] = imagenes[i*4 + j].getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-            
-            }
-        }
+        //para cargar el archivo de imagenes
+        //el nombre del archivo ,las filas , las columnas , el ancho del sprite y el alto del sprite y escala para cambiar el tamaño
+       imagenes = cargaImagenes("/imagenes/pokemons.png", 1 , 5, 64, 64, 2);
         setSize(ANCHOPANTALLA, ALTOPANTALLA);
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         buffer.createGraphics();
@@ -82,23 +79,48 @@ public class VentanaJuego extends javax.swing.JFrame {
         temporizador.start();
         
         //inicializo la posición inicial de la nave
+//para poner una nave de un spritesheet
+//        miNave.imagen = imagenes [4][2];
         miNave.x = ANCHOPANTALLA /2 - miNave.imagen.getWidth(this) / 2;
         miNave.y = ALTOPANTALLA - miNave.imagen.getHeight(this)  - 40; 
-        
+        //RETO HA HACER ESTO CON MODS (BUCLE FOR ANIDADO)
         //inicio el array de los marcianos
          for(int i=0; i<filas; i++){
             for(int j=0; j<columnas; j++){
                 
                 listaMarcianos[i][j] = new Marciano();
-                listaMarcianos[i][j].imagen1 = imagenes[4];
-                listaMarcianos[i][j].imagen2 = imagenes[5];
-                listaMarcianos[i][j].x = j*(8 + listaMarcianos[i][j].imagen1.getWidth(null));
-                listaMarcianos[i][j].y = i*(8 + listaMarcianos[i][j].imagen1.getHeight(null));
+                listaMarcianos[i][j].imagen1 = imagenes[0][1];
+                listaMarcianos[i][j].imagen2 = imagenes[0][2];
+                listaMarcianos[i][j].x = j*(15 + listaMarcianos[i][j].imagen1.getWidth(null));
+                listaMarcianos[i][j].y = i*(10 + listaMarcianos[i][j].imagen1.getHeight(null));
             }
          }
         
     }
     
+    //Este metodo va a servir para crear el array de imagenes con todas las imagenes del sprittesheet.
+    //devolvera un array de dos dimensiones con las imagenes del archivo
+    private Image[][] cargaImagenes(String nombreArchivoImagenes,int numFilas, int numColumnas, int ancho, int alto, int escala){
+            try {
+            plantilla = ImageIO.read(getClass().getResource(nombreArchivoImagenes));
+        } catch (IOException ex) {}
+            Image [][] arrayImagenes = new Image[numFilas][numColumnas];
+            
+        //cargo las imagenes de forma individual en cada imagen del array de las imagenes 
+        for(int i=0; i<numFilas; i++){
+            for(int j=0; j<numColumnas; j++){
+            arrayImagenes[i][j] = plantilla.getSubimage(j*ancho, i*alto, ancho, alto);
+            //tamaño en pantalla de los marcianos, escalar la imagen del sprite
+            arrayImagenes[i][j] = arrayImagenes[i][j].getScaledInstance(ancho/escala, ancho/escala, Image.SCALE_SMOOTH);
+            
+            }
+        }
+        return arrayImagenes;
+//         //la última fila del spritesheet sólo mide 32 de alto, así que hay que hacerla aparte
+//        for (int j=0; j<4; j++){
+//            imagenes[20 + j] = plantilla.getSubimage(j*64, 5*64, 64, 32);   
+//        }
+        }
     private void bucleDelJuego(){
         //se encarga del redibujado de los objetos en el jPanel1
         //primero borro todo lo que hay en el buffer
@@ -269,6 +291,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
+                                     //   miDisparo.sonidoDisparo.start();
                                     miDisparo.disparado = true;
                                     break;
         }   
