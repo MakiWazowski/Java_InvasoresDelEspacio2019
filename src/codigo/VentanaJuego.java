@@ -3,6 +3,7 @@
  */
 package codigo;
 
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -69,6 +70,11 @@ public class VentanaJuego extends javax.swing.JFrame {
      */
     public VentanaJuego() {
         initComponents();
+        
+        AudioClip sonido;
+        sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/fondo2.wav"));
+        sonido.play();
+        
         //para cargar el archivo de imagenes
         //el nombre del archivo ,las filas , las columnas , el ancho del sprite y el alto del sprite y escala para cambiar el tamaño
        imagenes = cargaImagenes("/imagenes/pokemons.png", 1 , 5, 64, 64, 2);
@@ -298,7 +304,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
-                                     //   miDisparo.sonidoDisparo.start();
+                                    miDisparo.sonidoDisparo.start();
                                     miDisparo.disparado = true;
                                     break;
         }   
