@@ -84,20 +84,27 @@ public class VentanaJuego extends javax.swing.JFrame {
         miNave.x = ANCHOPANTALLA /2 - miNave.imagen.getWidth(this) / 2;
         miNave.y = ALTOPANTALLA - miNave.imagen.getHeight(this)  - 40; 
         //RETO HA HACER ESTO CON MODS (BUCLE FOR ANIDADO)
-        //inicio el array de los marcianos
-         for(int i=0; i<filas; i++){
-            for(int j=0; j<columnas; j++){
-                
-                listaMarcianos[i][j] = new Marciano();
-                listaMarcianos[i][j].imagen1 = imagenes[0][1];
-                listaMarcianos[i][j].imagen2 = imagenes[0][2];
-                listaMarcianos[i][j].x = j*(15 + listaMarcianos[i][j].imagen1.getWidth(null));
-                listaMarcianos[i][j].y = i*(10 + listaMarcianos[i][j].imagen1.getHeight(null));
-            }
-         }
+        //aqui elegimos la fila en la que vamos a poner los marcianos y el marciano segun su fila y columna
+        creaFilaDeMarcianos(0, 0, 0);
+        creaFilaDeMarcianos(1, 0, 1);
+        creaFilaDeMarcianos(2, 0, 2);
+        creaFilaDeMarcianos(3, 0, 3);
+        creaFilaDeMarcianos(4, 0, 0);
+        
         
     }
-    
+    private void creaFilaDeMarcianos (int numFila, int spriteFila, int spriteColumna){
+            //inicio el array de los marcianos
+          for(int j=0; j<columnas; j++){
+                
+                listaMarcianos[numFila][j] = new Marciano();
+                //cambiar el marciano 
+                listaMarcianos[numFila][j].imagen1 = imagenes[spriteFila][spriteColumna];
+                listaMarcianos[numFila][j].imagen2 = imagenes[spriteFila][spriteColumna + 1];
+                listaMarcianos[numFila][j].x = j*(15 + listaMarcianos[numFila][j].imagen1.getWidth(null));
+                listaMarcianos[numFila][j].y = numFila*(10 + listaMarcianos[numFila][j].imagen1.getHeight(null));
+            }
+    }
     //Este metodo va a servir para crear el array de imagenes con todas las imagenes del sprittesheet.
     //devolvera un array de dos dimensiones con las imagenes del archivo
     private Image[][] cargaImagenes(String nombreArchivoImagenes,int numFilas, int numColumnas, int ancho, int alto, int escala){
