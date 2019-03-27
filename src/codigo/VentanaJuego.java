@@ -43,7 +43,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     //numero de marcianos que van a aparecer 
     int filas =5;
-    int columnas =5;
+    int columnas =8;
    
     BufferedImage buffer = null;
     
