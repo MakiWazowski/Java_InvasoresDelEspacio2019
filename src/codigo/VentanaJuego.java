@@ -5,8 +5,12 @@ package codigo;
 
 import java.applet.AudioClip;
 import java.awt.Color;
+import static java.awt.Color.black;
+import static java.awt.Color.white;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,18 +25,26 @@ import javax.swing.Timer;
  * @author Irene Benito
  */
 public class VentanaJuego extends javax.swing.JFrame {
-    
-    
-    
+   public static Label label2 = new Label(); 
+
+    //para la puntuacion
+   public static Label label1 = new Label(); 
+   int puntuacion = 0;
+    //para el fondo de la pantalla con imagen 
+//     public Image imagenFondo;
+//     public URL fondo;
+//    
     //private boolean gameEnded=false;
 
-    static int ANCHOPANTALLA = 600;
-    static int ALTOPANTALLA = 450;
+  
+    
+    static int ANCHOPANTALLA = 700;
+    static int ALTOPANTALLA = 550;
     
     //numero de marcianos que van a aparecer 
     int filas =5;
     int columnas =5;
-    
+   
     BufferedImage buffer = null;
     
     //declaro la ventana nave
@@ -62,15 +74,43 @@ public class VentanaJuego extends javax.swing.JFrame {
             bucleDelJuego();
         }
     });
+    
 //    public void gameOver() {
 //       gameEnded = true;
+//    System.exit(ABORT);
 //      }
     /**
      * Creates new form VentanaJuego
      */
     public VentanaJuego() {
         initComponents();
+       
+        setLocationRelativeTo(null);
+        Font font1;
+        Font font2 = null;
+        font1 = new Font("Courier New", Font.BOLD, 40);
+        font2 = new Font("Calibri", Font.BOLD, 30);
         
+        label2.setText("CATCH THEM ALL!!"); 
+        label2.setFont(font2);
+        label2.setForeground(white);
+        label2.setBackground(black);
+        label2.setBounds(200, 0, 600, 30);
+        
+        label1.setFont(font1);
+        label1.setForeground(white);
+        label1.setBackground(black);
+        label1.setBounds(600, 0, 100, 45);
+        label1.setText("0");
+        jPanel1.add(label1);
+        jPanel1.add(label2);
+        //añadimos la imagen de fondo 
+//        fondo = this.getClass().getResource(("/imagenes/fondo.png"));
+//        imagenFondo = new ImageIcon(fondo).getImage();
+//        
+//        Container contenedor = getContentPane();
+//        contenedor.add(panel);
+        //añadimos el sonido de fondo 2
         AudioClip sonido;
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/fondo2.wav"));
         sonido.play();
@@ -141,6 +181,9 @@ public class VentanaJuego extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
+        //para poner la imagen de fondo 
+//        g2.drawImage(imagenFondo, 0 , 0 , getWidth(), getHeight(), this );
+        
         
         ///////////////////////////////////////////////////////
         //redibujaremos aquí cada elemento
@@ -194,6 +237,8 @@ public class VentanaJuego extends javax.swing.JFrame {
                 miDisparo.posicionaDisparo(miNave);
                 miDisparo.y = 1000;
                 miDisparo.disparado = false;
+                puntuacion = puntuacion + 15;
+                label1.setText("" + puntuacion);
             }
         }
             }
@@ -213,7 +258,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     private void pintaMarcianos (Graphics2D _g2){
        
         int anchoMarciano = listaMarcianos[0][0].imagen1.getWidth(null);
-         for(int i=0; i<filas; i++){
+         for(int i=1; i<filas; i++){
             for(int j=0; j<columnas; j++){
                 if(listaMarcianos[i][j].vivo){
                 listaMarcianos[i][j].mueve(); 
@@ -257,6 +302,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -269,15 +315,21 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 556, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 425, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -359,6 +411,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
