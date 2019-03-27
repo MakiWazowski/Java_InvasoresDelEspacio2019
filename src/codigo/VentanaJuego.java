@@ -5,7 +5,6 @@ package codigo;
 
 import java.applet.AudioClip;
 import java.awt.Color;
-import static java.awt.Color.black;
 import static java.awt.Color.green;
 import static java.awt.Color.white;
 import java.awt.Font;
@@ -256,9 +255,19 @@ public class VentanaJuego extends javax.swing.JFrame {
                 //necesito multiplicar la velocidad por menos uno para que se mueva 
                 //hacia la izquierda 
                 listaMarcianos[i][j].setVelocidadX(listaMarcianos[i][j].getVelocidadX()* -1);
+                //para que bajen los marcianos 
+                listaMarcianos[i][j].y += 20;
             }
         }
     }
+    
+//    private void bajanMarcianos(){
+//         for (int i=0; i<filas; i++){
+//             for (int j=0; j<columnas; j++){
+//                 listaMarcianos[i][j].setY(listaMarcianos[i][j].getY() + listaMarcianos[0][0].imagen1.getHeight(null)/2);
+//             }
+//         }
+//    }
     
     private void pintaMarcianos (Graphics2D _g2){
        
@@ -292,6 +301,7 @@ public class VentanaJuego extends javax.swing.JFrame {
          }
         if (direccionMarcianos){
             cambiaDireccionMarcianos();
+//            bajanMarcianos();
             direccionMarcianos = false;
         }
     }
