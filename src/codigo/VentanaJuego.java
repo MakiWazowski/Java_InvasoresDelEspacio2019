@@ -112,14 +112,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         label1.setText("0");
         jPanel1.add(label1);
         jPanel1.add(label2);
-        //añadimos la imagen de fondo 
-//        fondo = this.getClass().getResource(("/imagenes/fondo.png"));
-//        imagenFondo = new ImageIcon(fondo).getImage();
-//        
-//        Container contenedor = getContentPane();
-//        contenedor.add(panel);
-
-
+      
         //añadimos el sonido de fondo 2
         AudioClip sonido;
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/fondo2.wav"));
@@ -368,6 +361,9 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
+                                       AudioClip sonido;
+                                       sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/disparo.wav"));
+                                       sonido.play();
 //                                    miDisparo.sonidoDisparo.start();
                                     miDisparo.disparado = true;
                                     break;
