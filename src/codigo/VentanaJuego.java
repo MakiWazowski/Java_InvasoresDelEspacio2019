@@ -6,6 +6,7 @@ package codigo;
 import java.applet.AudioClip;
 import java.awt.Color;
 import static java.awt.Color.black;
+import static java.awt.Color.green;
 import static java.awt.Color.white;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -25,21 +26,20 @@ import javax.swing.Timer;
  * @author Irene Benito
  */
 public class VentanaJuego extends javax.swing.JFrame {
+    
+    //para el titulo
    public static Label label2 = new Label(); 
 
     //para la puntuacion
    public static Label label1 = new Label(); 
    int puntuacion = 0;
-    //para el fondo de la pantalla con imagen 
-//     public Image imagenFondo;
-//     public URL fondo;
-//    
+
     //private boolean gameEnded=false;
 
   
     
     static int ANCHOPANTALLA = 700;
-    static int ALTOPANTALLA = 450;
+    static int ALTOPANTALLA = 550;
     
     //numero de marcianos que van a aparecer 
     int filas =5;
@@ -67,6 +67,9 @@ public class VentanaJuego extends javax.swing.JFrame {
     BufferedImage plantilla = null;
     Image [][] imagenes;
     
+    //fondo
+     Image fondo;
+     
     //para la velocidad en la que se mueve todo 
     Timer temporizador = new Timer(10, new ActionListener() {
         @Override
@@ -84,23 +87,28 @@ public class VentanaJuego extends javax.swing.JFrame {
      */
     public VentanaJuego() {
         initComponents();
+        
+        //fondo
+       try {
+         fondo = ImageIO.read(getClass().getResource("/imagenes/fondo.png"));
+       } catch (IOException ex) {}
        //letras
         setLocationRelativeTo(null);
         Font font1;
         Font font2 = null;
-        font1 = new Font("Courier New", Font.BOLD, 40);
+        font1 = new Font("Courier New", Font.BOLD, 30);
         font2 = new Font("Calibri", Font.BOLD, 30);
         //titulo
         label2.setText("CATCH THEM ALL!!"); 
         label2.setFont(font2);
         label2.setForeground(white);
-        label2.setBackground(black);
+        label2.setBackground(green);
         label2.setBounds(200, 0, 600, 30);
         //puntuacion
         label1.setFont(font1);
         label1.setForeground(white);
-        label1.setBackground(black);
-        label1.setBounds(600, 0, 100, 45);
+        label1.setBackground(green);
+        label1.setBounds(600, 0, 100, 30);
         label1.setText("0");
         jPanel1.add(label1);
         jPanel1.add(label2);
@@ -134,6 +142,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         //RETO HA HACER ESTO CON MODS (BUCLE FOR ANIDADO)
         //aqui elegimos la fila en la que vamos a poner los marcianos y el marciano segun su fila y columna
         creaFilaDeMarcianos(0, 0, 0);
+        
         creaFilaDeMarcianos(1, 0, 1);
         creaFilaDeMarcianos(2, 0, 2);
         creaFilaDeMarcianos(3, 0, 3);
@@ -153,7 +162,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 listaMarcianos[numFila][j].y = numFila*(10 + listaMarcianos[numFila][j].imagen1.getHeight(null));
             }
     }
-    //Este metodo va a servir para crear el array de imagenes con todas las imagenes del sprittesheet.
+    //Este metodo va a servir para crear el array de imagenes con todas las imagenes del spritesheet.
     //devolvera un array de dos dimensiones con las imagenes del archivo
     private Image[][] cargaImagenes(String nombreArchivoImagenes,int numFilas, int numColumnas, int ancho, int alto, int escala){
             try {
@@ -176,6 +185,7 @@ public class VentanaJuego extends javax.swing.JFrame {
 //            imagenes[20 + j] = plantilla.getSubimage(j*64, 5*64, 64, 32);   
 //        }
         }
+    
     private void bucleDelJuego(){
         //se encarga del redibujado de los objetos en el jPanel1
         //primero borro todo lo que hay en el buffer
@@ -183,9 +193,9 @@ public class VentanaJuego extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
-        //para poner la imagen de fondo 
-//        g2.drawImage(imagenFondo, 0 , 0 , getWidth(), getHeight(), this );
         
+        // pintar fondo
+        g2.drawImage(fondo, 0, 0, null);        
         
         ///////////////////////////////////////////////////////
         //redibujaremos aquí cada elemento
@@ -358,7 +368,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
-                                    miDisparo.sonidoDisparo.start();
+//                                    miDisparo.sonidoDisparo.start();
                                     miDisparo.disparado = true;
                                     break;
         }   

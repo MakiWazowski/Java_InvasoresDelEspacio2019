@@ -25,9 +25,9 @@ public class Disparos {
     
         public Disparos(){
         try {
-            sonidoDisparo = AudioSystem.getClip();
-            sonidoDisparo.open(AudioSystem.getAudioInputStream(
-                    getClass().getResource("/sonido/missile.wav")));
+//            sonidoDisparo = AudioSystem.getClip();
+//            sonidoDisparo.open(AudioSystem.getAudioInputStream(
+//                    getClass().getResource("/sonido/missile.wav")));
             imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball.png"));
         } catch (Exception ex) {
             
