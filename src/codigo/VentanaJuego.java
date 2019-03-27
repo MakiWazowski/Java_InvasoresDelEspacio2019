@@ -39,7 +39,7 @@ public class VentanaJuego extends javax.swing.JFrame {
   
     
     static int ANCHOPANTALLA = 700;
-    static int ALTOPANTALLA = 550;
+    static int ALTOPANTALLA = 450;
     
     //numero de marcianos que van a aparecer 
     int filas =5;
@@ -84,19 +84,19 @@ public class VentanaJuego extends javax.swing.JFrame {
      */
     public VentanaJuego() {
         initComponents();
-       
+       //letras
         setLocationRelativeTo(null);
         Font font1;
         Font font2 = null;
         font1 = new Font("Courier New", Font.BOLD, 40);
         font2 = new Font("Calibri", Font.BOLD, 30);
-        
+        //titulo
         label2.setText("CATCH THEM ALL!!"); 
         label2.setFont(font2);
         label2.setForeground(white);
         label2.setBackground(black);
         label2.setBounds(200, 0, 600, 30);
-        
+        //puntuacion
         label1.setFont(font1);
         label1.setForeground(white);
         label1.setBackground(black);
@@ -110,6 +110,8 @@ public class VentanaJuego extends javax.swing.JFrame {
 //        
 //        Container contenedor = getContentPane();
 //        contenedor.add(panel);
+
+
         //añadimos el sonido de fondo 2
         AudioClip sonido;
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/fondo2.wav"));
