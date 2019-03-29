@@ -18,6 +18,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Timer;
 
 /**
@@ -33,9 +35,8 @@ public class VentanaJuego extends javax.swing.JFrame {
    public static Label label1 = new Label(); 
    int puntuacion = 0;
 
-    //private boolean gameEnded=false;
 
-  
+      boolean gameOver = false;
     
     static int ANCHOPANTALLA = 700;
     static int ALTOPANTALLA = 550;
@@ -77,10 +78,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
     });
     
-//    public void gameOver() {
-//       gameEnded = true;
-//    System.exit(ABORT);
-//      }
+
     /**
      * Creates new form VentanaJuego
      */
@@ -113,9 +111,10 @@ public class VentanaJuego extends javax.swing.JFrame {
         jPanel1.add(label2);
       
         //añadimos el sonido de fondo 2
-        AudioClip sonido;
-        sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/fondo2.wav"));
-        sonido.play();
+        
+        reproduce("/sonido/fondo2.wav");
+        
+        
         
         //para cargar el archivo de imagenes
         //el nombre del archivo ,las filas , las columnas , el ancho del sprite y el alto del sprite y escala para cambiar el tamaño
@@ -134,7 +133,6 @@ public class VentanaJuego extends javax.swing.JFrame {
         //RETO HA HACER ESTO CON MODS (BUCLE FOR ANIDADO)
         //aqui elegimos la fila en la que vamos a poner los marcianos y el marciano segun su fila y columna
         creaFilaDeMarcianos(0, 0, 0);
-        
         creaFilaDeMarcianos(1, 0, 1);
         creaFilaDeMarcianos(2, 0, 2);
         creaFilaDeMarcianos(3, 0, 3);
@@ -183,11 +181,40 @@ public class VentanaJuego extends javax.swing.JFrame {
         //primero borro todo lo que hay en el buffer
         contador++;
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
+        if(!gameOver){
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
         
         // pintar fondo
         g2.drawImage(fondo, 0, 0, null);        
+        
+//        if(puntuacion == 600){
+//            try {
+//                miDisparo.imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball3.png"));
+//            } catch (IOException ex) {}
+//        }
+//        if(puntuacion == 500){
+//            try {
+//                miDisparo.imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball2.png"));
+//            } catch (IOException ex) {}
+//        }
+//        if(puntuacion == 800){
+//            try {
+//                miDisparo.imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball4.png"));
+//            } catch (IOException ex) {}
+//        }
+//        if(puntuacion == 1000){
+//            try {
+//                miDisparo.imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball6.png"));
+//            } catch (IOException ex) {}
+//        }
+        if(puntuacion == 900){
+            try {
+                miDisparo.imagen = ImageIO.read(getClass().getResource("/imagenes/pokeball5.png"));
+            } catch (IOException ex) {}
+        }
+        
+      
         
         ///////////////////////////////////////////////////////
         //redibujaremos aquí cada elemento
@@ -209,16 +236,36 @@ public class VentanaJuego extends javax.swing.JFrame {
         /////////////////////////////////////////////////////////////
         //*****************   fase final, se dibuja ***************//
         //*****************   el buffer de golpe sobre el Jpanel***//
-        
+        }
+        else{
+            try{
+                gameOver(g2);
+            }
+            catch( IOException ex){
+                
+            }
+        }
         g2 = (Graphics2D) jPanel1.getGraphics();
         g2.drawImage(buffer, 0, 0, null);
         
     }
     //variables tipo rectangulo :calcula si un pixel alrededor de el disparo y el marciano 
     //coinciden 
+    
+    //hacemos una clase para el game over 
+    private void gameOver(Graphics2D muerto) throws IOException{
+         try {
+               Image gameOver1 = ImageIO.read(getClass().getResource("/imagenes/gameOver.png"));
+               muerto.drawImage(gameOver1, 0, 0, ANCHOPANTALLA, ALTOPANTALLA ,null);
+           } catch (IOException ex) {}
+             
+              reproduce("/sonido/gameOver.wav");
+    }
+    
     private void chequeaColision(){
         Rectangle2D.Double rectanguloMarciano = new Rectangle2D.Double();
         Rectangle2D.Double rectanguloDisparo = new Rectangle2D.Double();
+        Rectangle2D.Double rectanguloNave = new Rectangle2D.Double();
         
         rectanguloDisparo.setFrame( miDisparo.x, 
                                     miDisparo.y, 
@@ -234,20 +281,33 @@ public class VentanaJuego extends javax.swing.JFrame {
                                             listaMarcianos[i][j].y,
                                             listaMarcianos[i][j].imagen1.getHeight(null),
                                             listaMarcianos[i][j].imagen1.getWidth(null));
+              
             //ahora hay que comprobar si interseccionan
             if(rectanguloDisparo.intersects(rectanguloMarciano)){
+                AudioClip sonido;
+                sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/explosion.wav"));
+                sonido.play();
 //para mandar al marciano a una posicion muy alta y que no salga en la pantalla 
                 listaMarcianos[i][j].vivo = false;
                 miDisparo.posicionaDisparo(miNave);
                 miDisparo.y = 1000;
                 miDisparo.disparado = false;
-                puntuacion = puntuacion + 15;
+                puntuacion = puntuacion + 50;
                 label1.setText("" + puntuacion);
             }
-        }
+               
+                rectanguloNave.setFrame(miNave.x,
+                                       miNave.y, 
+                                       miNave.imagen.getWidth(null),
+                                      miNave.imagen.getHeight(null));
+           if(rectanguloNave.intersects(rectanguloMarciano)){
+               gameOver = true;
+           }
+         }
             }
         }
     }
+   
     
     private void cambiaDireccionMarcianos(){
         for(int i=0; i<filas; i++){
@@ -268,6 +328,22 @@ public class VentanaJuego extends javax.swing.JFrame {
 //             }
 //         }
 //    }
+    
+    private void reproduce (String cancion){
+           try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream( getClass().getResource(cancion) ));
+            clip.loop(0);
+            Thread one = new Thread() {
+                    public void run() {
+                            while(clip.getFramePosition()<clip.getFrameLength())
+                                Thread.yield();
+                    }  
+                };
+            one.start();
+        } catch (Exception e) {      
+        } 
+   }
     
     private void pintaMarcianos (Graphics2D _g2){
        
@@ -371,10 +447,10 @@ public class VentanaJuego extends javax.swing.JFrame {
             case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true) ; break ;
             //la x y la y del disparo sera el de la nave , por lo que sale por el lateral de la nave 
             case KeyEvent.VK_SPACE: miDisparo.posicionaDisparo(miNave);
-                                       AudioClip sonido;
-                                       sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/disparo.wav"));
-                                       sonido.play();
-//                                    miDisparo.sonidoDisparo.start();
+                                    AudioClip sonido;
+                                    sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonido/disparo.wav"));
+                                    sonido.play();
+//                                  miDisparo.sonidoDisparo.start();
                                     miDisparo.disparado = true;
                                     break;
         }   
